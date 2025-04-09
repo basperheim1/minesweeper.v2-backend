@@ -589,7 +589,7 @@ class MinesweeperSolver:
         self.rules = rr.rules
                                     
 
-    def solve(self) -> List[Dict[str, float], float]:
+    def solve(self) -> Tuple[Dict[str, float], float]:
         
         TK: TimeKeeper = TimeKeeper()
         
