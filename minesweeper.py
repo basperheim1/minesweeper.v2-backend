@@ -62,7 +62,7 @@ class RuleReducer():
                         if len(difference_between_sets) != len(rule.undetermined_cells):
                             new_rule = Rule(rule.num_undetermined_mines, difference_between_sets)
                             self.rules.remove(rule)
-                            if new_rule.num_undetermined_mines > 0:
+                            if len(new_rule.undetermined_cells) > 0:
                                 self.rules.add(new_rule)
                                 rules_deque.appendleft(new_rule)
                                 
@@ -91,80 +91,6 @@ class RuleReducer():
                             # print(f"rule: {rule}")
                             # print(f"new rule: {new_rule}")
                     
-
-        
-        
-            
-    # def reduce_rules(self):
-    #     queue: Deque[Rule] = deque()
-        
-    #     # print(f"rules: {self.rules}")
-        
-    #     # Add all the rules to the queue 
-    #     for rule in self.rules:
-    #         queue.append(rule)
-            
-    #     while queue:
-    #         current_rule = queue.popleft()
-            
-    #         # # Possible rule is in the queue but was already removed, in this 
-    #         # # case, we want to ignore the rule 
-    #         # print(f"current rule: {current_rule}")
-    #         # print(f"rules: {self.rules}")
-    #         if current_rule in self.rules:
-    #             # print("IN RULES")
-
-    #             # Any rule that was modified by the current rule should be added to the queue 
-    #             # to see if it can be removed 
-    #             rules_to_be_added: Set[Rule] = set()
-                
-    #             # All the undetermined cells in this rule must be mines 
-    #             if current_rule.num_undetermined_mines == len(current_rule.undetermined_cells):
-                    
-    #                 # Remove the rule and add the cells in that rule to the mines list
-    #                 for cell in current_rule.undetermined_cells:
-    #                     self.mines.append(cell)
-    #                 self.rules.remove(current_rule)
-                    
-    #                 # Update the other rules based on the information gained from this iteration 
-    #                 # of the function 
-    #                 for rule in self.rules:
-    #                     added_rule = False
-                        
-    #                     for cell in current_rule.undetermined_cells:
-    #                         if cell in rule.undetermined_cells:
-    #                             rule.undetermined_cells.remove(cell)
-    #                             rule.num_undetermined_mines -= 1
-                                
-    #                             if not added_rule:
-    #                                 rules_to_be_added.add(rule)
-    #                                 added_rule = True
-                    
-    #             # All the undetrmined cells in this rule must be safes        
-    #             elif current_rule.num_undetermined_mines == 0:
-                    
-    #                 for cell in current_rule.undetermined_cells:
-    #                     self.safes.append(cell)
-    #                 self.rules.remove(current_rule)
-                    
-    #                 for rule in self.rules:
-                        
-    #                     added_rule = False 
-                        
-    #                     for cell in current_rule.undetermined_cells:
-    #                         if cell in rule.undetermined_cells:
-    #                             rule.undetermined_cells.remove(cell)
-    #                             if not added_rule:
-    #                                 rules_to_be_added.add(rule)
-    #                                 added_rule = True
-                                
-                            
-    #             for rule in rules_to_be_added:
-    #                 queue.append(rule)   
-    #                 # print(rule)
-                    
-    #     # print(f"reduced rules: {self.rules}")
-
         
         
 class Frontier():
@@ -293,6 +219,9 @@ class Frontier():
             # twice, and we only want to add the combination once 
             if is_mine:
                 frontier_counts.add_valid_combination(cells, mines)
+                
+            print(f"cells: {cells}")
+            print(f"mines: {mines}")
             
             return 
         
